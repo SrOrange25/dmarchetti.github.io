@@ -1,11 +1,1075 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Página</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Portfolio | Cocina Japonesa de Autor</title>
+    
+    <!-- Fuentes Premium y Iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- 
+    ================================================================
+       SECCIÓN CSS 
+       (Copia esto a tu archivo style.css cuando estés listo)
+    ================================================================
+    -->
+    <style>
+        :root {
+            /* Paleta de Colores de Lujo */
+            --gold: #D4AF37;
+            --gold-light: #F4C430;
+            --gold-dim: #8a6e1c;
+            --black: #050505;
+            --black-soft: #111111;
+            --charcoal: #1a1a1a;
+            --text-light: #f5f5f5;
+            --text-gray: #a0a0a0;
+            
+            /* Liquid Glass Variables */
+            --glass-bg: rgba(20, 20, 20, 0.65);
+            --glass-border: rgba(212, 175, 55, 0.25);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --blur-amount: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Cursor personalizado activado */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a1a1a' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+                        height 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+                        background-color 0.3s;
+            mix-blend-mode: exclusion;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        .hover-active {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border: 1px dashed var(--gold);
+            animation: rotateCursor 10s linear infinite;
+        }
+
+        @keyframes rotateCursor {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        p {
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+
+        .section-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            text-align: center;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* --- HEADER LIQUID GLASS (iOS 26 Style) --- */
+        header {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            max-width: 1400px;
+            height: 80px;
+            z-index: 1000;
+            border-radius: 40px;
+            
+            /* The Magic of Liquid Glass */
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount)) saturate(150%);
+            -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--glass-shadow);
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.scrolled {
+            width: 60%;
+            top: 15px;
+            height: 65px;
+            background: rgba(10, 10, 10, 0.85);
+            border-color: var(--gold-dim);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        nav a:hover::before {
+            width: 20px;
+        }
+
+        .menu-toggle {
+            display: none;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #2a2a2a 0%, #000 70%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .hero-kanji {
+            position: absolute;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 35vw;
+            color: rgba(212, 175, 55, 0.02);
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h3 {
+            font-size: 1.2rem;
+            color: var(--gold-light);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInDown 1s forwards 0.5s;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.8s;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--gold);
+            -webkit-text-fill-color: var(--gold);
+            margin-top: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+        }
+
+        /* Botón estilo Katana */
+        .btn-katana {
+            position: relative;
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            margin-top: 2rem;
+            color: var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            overflow: hidden;
+            transition: 0.5s;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 1.2s;
+        }
+
+        .btn-katana:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 50px var(--gold);
+        }
+
+        .btn-katana span {
+            position: absolute;
+            display: block;
+        }
+
+        .btn-katana span:nth-child(1) {
+            top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        @keyframes btn-anim1 {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 120px 10%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        /* --- ABOUT & PHILOSOPHY --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .philosophy-card {
+            background: var(--black-soft);
+            padding: 3rem;
+            border-left: 3px solid var(--gold);
+            position: relative;
+        }
+
+        .philosophy-card::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 10rem;
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            color: rgba(212, 175, 55, 0.1);
+            line-height: 1;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .stat-item h4 { font-size: 2.5rem; color: var(--text-light); margin-bottom: 0.5rem; }
+        .stat-item span { font-size: 0.8rem; text-transform: uppercase; color: var(--gold); }
+
+        .image-collage {
+            position: relative;
+            height: 600px;
+        }
+
+        .collage-img {
+            position: absolute;
+            border: 1px solid var(--gold-dim);
+            transition: transform 0.5s;
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        .collage-img:hover {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+            z-index: 10;
+        }
+
+        .c-img-1 { width: 70%; height: 60%; top: 0; left: 0; object-fit: cover; z-index: 1; }
+        .c-img-2 { width: 60%; height: 50%; bottom: 0; right: 0; object-fit: cover; z-index: 2; border: 1px solid var(--text-light); }
+
+        /* --- KODAWARI (Ingredients) --- */
+        .kodawari {
+            background: #0e0e0e;
+        }
+        
+        .ingredients-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 2rem;
+            padding: 2rem 0;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .ingredients-scroll::-webkit-scrollbar { display: none; }
+
+        .ingredient-card {
+            min-width: 300px;
+            background: var(--charcoal);
+            padding: 2rem;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .ingredient-card:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .ing-icon { font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
+
+        /* --- MENU (Advanced) --- */
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            cursor: none; /* usar cursor custom */
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            color: var(--gold);
+        }
+
+        .filter-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; height: 2px; background: var(--gold);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .dish-card {
+            position: relative;
+            background: #121212;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: transform 0.4s ease;
+            opacity: 1;
+        }
+
+        /* Animación para el filtrado JS */
+        .dish-card.hide {
+            display: none;
+        }
+        
+        .dish-card.fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dish-image-wrapper {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dish-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .dish-card:hover .dish-image-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .dish-content {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .dish-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .price {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .dish-desc {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1.5rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border: 1px solid #444;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        /* --- RESERVATIONS (New Section) --- */
+        .reservation {
+            background: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 0;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .res-form-container {
+            position: relative;
+            z-index: 2;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 4rem;
+            border: 1px solid var(--gold-dim);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #555;
+            padding: 1rem 0;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: var(--gold);
+        }
+
+        /* --- FOOTER LIQUID GLASS FLOTANTE --- */
+        /* Este footer se comporta como un bloque al final del documento, 
+           pero visualmente flota separado del borde.
+        */
+        .footer-wrapper {
+            padding: 50px 0 100px; /* Espacio extra abajo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 500;
+        }
+
+        .liquid-footer {
+            width: 90%;
+            max-width: 1100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            justify-items: center;
+            text-align: center;
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .liquid-footer.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .footer-brand h2 { font-size: 2rem; margin: 0; }
+        .footer-brand span { font-size: 0.8rem; color: #666; letter-spacing: 3px; }
+
+        .footer-links a {
+            display: block;
+            color: var(--text-gray);
+            text-decoration: none;
+            margin: 0.5rem 0;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+
+        .footer-social { display: flex; gap: 1.5rem; }
+        .footer-social i { font-size: 1.5rem; color: var(--gold); transition: transform 0.3s; }
+        .footer-social i:hover { transform: scale(1.2); color: #fff; }
+
+        /* Helpers */
+        .gold-text { color: var(--gold); }
+        
+        /* Animation Classes */
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
+        
+        .reveal { opacity: 0; transform: translateY(40px); transition: 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { width: 95%; padding: 0 1.5rem; }
+            nav { display: none; }
+            .menu-toggle { display: block; }
+            .hero h1 { font-size: 3rem; }
+            .about-container { grid-template-columns: 1fr; }
+            .image-collage { height: 400px; margin-bottom: 2rem; }
+            .liquid-footer { grid-template-columns: 1fr; gap: 2rem; width: 95%; padding: 2rem; }
+            .stat-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
 </head>
 <body>
-  <h1>Hola mundo 😎</h1>
-  <p>Esta es mi página subida a GitHub.</p>
+
+    <!-- --- ELEMENTOS DE UI --- -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Easter Egg Modal -->
+    <div id="secret-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:20000; align-items:center; justify-content:center;">
+        <div style="text-align:center; border: 2px solid var(--gold); padding: 4rem; background:#111;">
+            <h2 style="color:var(--gold);">Staff Menu Unlocked</h2>
+            <p>Has encontrado el secreto del Chef.</p>
+            <ul style="list-style:none; margin-top:2rem; text-align:left; color:#888;">
+                <li>> 01. Ramen de Cerdo Ibérico</li>
+                <li>> 02. Sashimi de Fugu (Pez Globo)</li>
+            </ul>
+            <button onclick="document.getElementById('secret-modal').style.display='none'" class="btn-katana" style="margin-top:2rem;">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- --- HEADER --- -->
+    <header id="main-header">
+        <div class="logo">KAI<span>ZEN</span></div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#philosophy">Filosofía</a></li>
+                <li><a href="#menu">Omakase</a></li>
+                <li><a href="#reservations">Reservas</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <!-- --- MAIN CONTENT --- -->
+    <main>
+        
+        <!-- HERO -->
+        <section id="hero" class="hero">
+            <div class="hero-kanji">職人</div> <!-- Shokunin (Artesano) -->
+            <div class="hero-content">
+                <h3>Cocina Japonesa Contemporánea</h3>
+                <h1>TU NOMBRE<br><span>EXECUTIVE CHEF</span></h1>
+                <p style="max-width:600px; margin:0 auto; font-style:italic;">"La simplicidad es el grado máximo de sofisticación."</p>
+                <a href="#menu" class="btn-katana">
+                    <span></span><span></span><span></span><span></span>
+                    Explorar Menú
+                </a>
+            </div>
+        </section>
+
+        <!-- PHILOSOPHY / ABOUT -->
+        <section id="philosophy">
+            <span class="section-subtitle">Kodawari (La búsqueda de la perfección)</span>
+            <h2 class="section-title">Mi Historia</h2>
+            
+            <div class="about-container">
+                <div class="about-text reveal">
+                    <div class="philosophy-card">
+                        <p>No soy solo un cocinero; soy un estudiante eterno del ingrediente. Mi formación comenzó en las calles de Osaka y se refinó en los restaurantes con estrella Michelin de Nueva York.</p>
+                        <br>
+                        <p>Mi cocina respeta la tradición del <strong>Edomae</strong> pero abraza la audacia de los sabores latinos. Cada plato es un diálogo entre el mar, la tierra y el comensal.</p>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <h4>12</h4>
+                            <span>Años de Experiencia</span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>3</h4>
+                            <span>Países Trabajados</span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>∞</h4>
+                            <span>Pasión</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="image-collage reveal">
+                    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="collage-img c-img-1" alt="Plating">
+                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="collage-img c-img-2" alt="Sushi Chef">
+                </div>
+            </div>
+        </section>
+
+        <!-- INGREDIENTS SLIDER -->
+        <section class="kodawari">
+            <h2 class="section-title" style="font-size: 2rem;">Ingredientes Clave</h2>
+            <div class="ingredients-scroll">
+                <div class="ingredient-card">
+                    <i class="fas fa-fish ing-icon"></i>
+                    <h3>Bluefin Tuna</h3>
+                    <p>Importado directamente de Toyosu Market. Madurado por 14 días.</p>
+                </div>
+                <div class="ingredient-card">
+                    <i class="fas fa-leaf ing-icon"></i>
+                    <h3>Wasabi Real</h3>
+                    <p>Rallado fresco en piel de tiburón (Oroshigane) al momento de servir.</p>
+                </div>
+                <div class="ingredient-card">
+                    <i class="fas fa-wine-bottle ing-icon"></i>
+                    <h3>Sake Artesanal</h3>
+                    <p>Selección exclusiva de prefecturas poco conocidas de Japón.</p>
+                </div>
+                <div class="ingredient-card">
+                    <i class="fas fa-seedling ing-icon"></i>
+                    <h3>Arroz Koshihikari</h3>
+                    <p>La base de todo. Vinagrado con Akazu rojo añejo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU SECTION -->
+        <section id="menu">
+            <span class="section-subtitle">Selección de Temporada</span>
+            <h2 class="section-title">El Menú</h2>
+
+            <!-- Botones de Filtro -->
+            <div class="menu-filters reveal">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="nigiri">Nigiris</button>
+                <button class="filter-btn" data-filter="sashimi">Sashimi</button>
+                <button class="filter-btn" data-filter="kitchen">Cocina Caliente</button>
+            </div>
+
+            <!-- Grid de Platos -->
+            <div class="menu-grid">
+                
+                <!-- Nigiri 1 -->
+                <div class="dish-card reveal" data-category="nigiri">
+                    <div class="dish-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Otoro">
+                    </div>
+                    <div class="dish-content">
+                        <div class="dish-header">
+                            <h3>Otoro Caviar</h3>
+                            <span class="price">$18</span>
+                        </div>
+                        <p class="dish-desc">Ventresca grasa de atún aleta azul con caviar Oscietra y pan de oro.</p>
+                        <div class="tags">
+                            <span class="tag">Raw</span>
+                            <span class="tag">Premium</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kitchen 1 -->
+                <div class="dish-card reveal" data-category="kitchen">
+                    <div class="dish-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1552611052-33e04de081de?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Wagyu">
+                    </div>
+                    <div class="dish-content">
+                        <div class="dish-header">
+                            <h3>A5 Wagyu Ishiyaki</h3>
+                            <span class="price">$55</span>
+                        </div>
+                        <p class="dish-desc">Carne de Miyazaki cocinada sobre piedra volcánica caliente en la mesa.</p>
+                        <div class="tags">
+                            <span class="tag">Hot</span>
+                            <span class="tag">Signature</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sashimi 1 -->
+                <div class="dish-card reveal" data-category="sashimi">
+                    <div class="dish-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1534482421-64566f976cfa?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Moriawase">
+                    </div>
+                    <div class="dish-content">
+                        <div class="dish-header">
+                            <h3>Sashimi Moriawase</h3>
+                            <span class="price">$42</span>
+                        </div>
+                        <p class="dish-desc">Selección del chef de 7 tipos de pescado estacional.</p>
+                        <div class="tags">
+                            <span class="tag">Raw</span>
+                            <span class="tag">Share</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Nigiri 2 -->
+                 <div class="dish-card reveal" data-category="nigiri">
+                    <div class="dish-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Uni">
+                    </div>
+                    <div class="dish-content">
+                        <div class="dish-header">
+                            <h3>Hokkaido Uni</h3>
+                            <span class="price">$22</span>
+                        </div>
+                        <p class="dish-desc">Erizo de mar fresco de Hokkaido servido en Gunkan crujiente.</p>
+                        <div class="tags">
+                            <span class="tag">Sea Urchin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kitchen 2 -->
+                <div class="dish-card reveal" data-category="kitchen">
+                    <div class="dish-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1580442151529-343f2f6e0e27?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Gyozas">
+                    </div>
+                    <div class="dish-content">
+                        <div class="dish-header">
+                            <h3>Foie Gras Gyoza</h3>
+                            <span class="price">$16</span>
+                        </div>
+                        <p class="dish-desc">Empanadillas rellenas de pato y foie, salsa ponzu trufada.</p>
+                        <div class="tags">
+                            <span class="tag">Fusion</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RESERVATIONS -->
+        <section id="reservations" class="reservation">
+            <div class="overlay"></div>
+            <div class="res-form-container reveal">
+                <h2 style="margin-bottom:2rem;">Reservar Experiencia</h2>
+                <form onsubmit="event.preventDefault(); alert('Sistema de demostración: Reserva enviada');">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-input" placeholder="Tu Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" class="form-input" style="color-scheme: dark;">
+                    </div>
+                    <div class="form-group">
+                        <label>Personas</label>
+                        <select class="form-input" style="background:#111;">
+                            <option>2 Personas (Barra)</option>
+                            <option>4 Personas (Mesa)</option>
+                            <option>Omakase Privado</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-katana" style="width:100%; text-align:center;">Confirmar</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- --- FOOTER FLOTANTE (LIQUID GLASS) --- -->
+    <div class="footer-wrapper">
+        <footer class="liquid-footer reveal">
+            
+            <div class="footer-brand">
+                <h2>KAI<span>ZEN</span></h2>
+                <span>CUCHILLO Y ALMA</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="#about">Historia</a>
+                <a href="#menu">Menú</a>
+                <a href="#contact">Prensa</a>
+                <a href="#privacy">Aviso Legal</a>
+            </div>
+
+            <div class="footer-social">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-tiktok"></i>
+                <i class="fas fa-envelope"></i>
+            </div>
+
+        </footer>
+    </div>
+
+    <!-- 
+    ================================================================
+       SECCIÓN JAVASCRIPT
+       (Copia esto a tu archivo script.js)
+    ================================================================
+    -->
+    <script>
+        // 1. LÓGICA DEL MENU FILTRABLE
+        // ============================================
+        // Explicación: Seleccionamos todos los botones y todas las tarjetas de plato.
+        // Al hacer click, leemos la categoría del botón y ocultamos/mostramos las tarjetas que coinciden.
+        
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const dishCards = document.querySelectorAll('.dish-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remover clase activa de todos los botones
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Agregar clase activa al botón clickeado
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                dishCards.forEach(card => {
+                    // Resetear animación
+                    card.classList.remove('fade-in');
+                    
+                    if (filterValue === 'all') {
+                        card.classList.remove('hide');
+                        setTimeout(() => card.classList.add('fade-in'), 10);
+                    } else {
+                        if (card.getAttribute('data-category') === filterValue) {
+                            card.classList.remove('hide');
+                            setTimeout(() => card.classList.add('fade-in'), 10);
+                        } else {
+                            card.classList.add('hide');
+                        }
+                    }
+                });
+            });
+        });
+
+
+        // 2. LOGICA DEL CURSOR PERSONALIZADO
+        // ============================================
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            // El punto sigue al mouse instantáneamente
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            
+            // El círculo grande tiene un pequeño delay (definido en CSS transition)
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Hover Effects para interactividad
+        const interactiveElements = document.querySelectorAll('a, button, input, select, .dish-card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover-active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover-active');
+            });
+        });
+
+
+        // 3. HEADER LIQUID GLASS (Shrink on Scroll)
+        // ============================================
+        const header = document.querySelector('#main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+
+        // 4. ANIMACIONES AL HACER SCROLL (Reveal)
+        // ============================================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Si es el footer, le damos una clase especial para que flote
+                    if(entry.target.classList.contains('liquid-footer')){
+                        entry.target.classList.add('visible');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.1 // Se activa cuando el 10% del elemento es visible
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+
+        // 5. EASTER EGG (Konami Code)
+        // ============================================
+        // Arriba, Arriba, Abajo, Abajo, Izq, Der, Izq, Der, B, A
+        const secretCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let currentSequence = [];
+
+        window.addEventListener('keydown', (e) => {
+            currentSequence.push(e.key);
+            if (currentSequence.length > secretCode.length) {
+                currentSequence.shift();
+            }
+            if (JSON.stringify(currentSequence) === JSON.stringify(secretCode)) {
+                document.getElementById('secret-modal').style.display = 'flex';
+                // Resetear secuencia
+                currentSequence = []; 
+            }
+        });
+
+    </script>
 </body>
 </html>
