@@ -1,1 +1,939 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Marchetti | Executive Fusion Chef</title>
+    
+    <!-- Fuentes Premium al estilo Canva Editorial -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,900;1,6..96,400&family=Inter:wght@100;300;400;700;900&family=Outfit:wght@100;300;600;900&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        /* SISTEMA DE DISEÑO: DANSHI PRESTIGE
+           Inspiración: Estética de Canva Pro, Minimalismo Japonés y Lujo Italiano.
+        */
+        :root {
+            --primary: #E5D5B8; /* Champagne Gold */
+            --secondary: #A68966;
+            --bg-dark: #070707;
+            --bg-accent: #0f0f0f;
+            --text-main: #FFFFFF;
+            --text-dim: #999999;
+            --liquid-glass-bg: rgba(15, 15, 15, 0.65);
+            --liquid-glass-border: rgba(229, 213, 184, 0.15);
+            --blur: 25px;
+            --transition-slow: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.3s ease;
+        }
+
+        /* RESET PROFESIONAL */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            cursor: none; /* Cursor personalizado obligatorio */
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) var(--bg-dark);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* CURSOR LÍQUIDO */
+        #cursor-main {
+            position: fixed;
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+            mix-blend-mode: difference;
+        }
+
+        #cursor-dot {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        /* BARRA DE PROGRESO INVISIBLE HASTA SCROLL */
+        #scroll-tracker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--primary);
+            z-index: 3000;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* HEADER LIQUID GLASS */
+        header {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1400px;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2000;
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--liquid-glass-border);
+            border-radius: 100px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: var(--transition-slow);
+        }
+
+        header.scrolled {
+            top: 15px;
+            width: 75%;
+            padding: 15px 40px;
+            background: rgba(10, 10, 10, 0.9);
+        }
+
+        .brand-logo {
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-decoration: none;
+            color: var(--text-main);
+            letter-spacing: 6px;
+        }
+
+        .brand-logo span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* HERO SECTION - TIPO CANVA */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            padding-top: 100px;
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 900;
+            font-size: 20vw;
+            color: rgba(255,255,255,0.02);
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .hero-content {
+            z-index: 10;
+        }
+
+        .hero-name {
+            font-family: 'Bodoni Moda', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+
+        .hero-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3rem, 10vw, 7.5rem);
+            font-weight: 700;
+            line-height: 0.9;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            margin: 0 auto 50px;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 22px 60px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            border-radius: 2px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .cta-btn:hover {
+            background: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(229, 213, 184, 0.2);
+        }
+
+        /* BIOGRAFÍA - SECCIÓN DANIEL MARCHETTI */
+        .section-bio {
+            padding: 150px 10%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            background: #000;
+        }
+
+        .bio-visual {
+            position: relative;
+        }
+
+        .bio-image-frame {
+            width: 100%;
+            height: 750px;
+            overflow: hidden;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .bio-image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(0.8) contrast(1.2);
+            transition: var(--transition-slow);
+        }
+
+        .bio-visual:hover img {
+            filter: grayscale(0) contrast(1);
+            transform: scale(1.05);
+        }
+
+        .bio-label {
+            position: absolute;
+            top: 40px;
+            right: -40px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 30px;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transform: rotate(90deg);
+        }
+
+        .bio-content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .bio-content h2 span {
+            font-family: 'Bodoni Moda', serif;
+            font-style: italic;
+            display: block;
+            color: var(--secondary);
+            text-transform: lowercase;
+        }
+
+        .bio-text {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            line-height: 2;
+        }
+
+        .bio-text p {
+            margin-bottom: 25px;
+        }
+
+        /* SECCIÓN COCINA / MENÚ EXPANDIDO */
+        .section-menu {
+            padding: 120px 0;
+            background: var(--bg-accent);
+        }
+
+        .menu-title-block {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-dim);
+            padding: 15px 40px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .menu-card {
+            background: var(--bg-dark);
+            padding: 80px 50px;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: var(--transition-slow);
+        }
+
+        .menu-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
+        }
+
+        .menu-card-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            z-index: 0;
+            transition: var(--transition-slow);
+        }
+
+        .menu-card:hover .menu-card-img {
+            opacity: 0.6;
+            transform: scale(1.1);
+        }
+
+        .menu-card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-card-cat {
+            font-size: 0.6rem;
+            color: var(--primary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .menu-card h3 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .menu-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+
+        .menu-card-price {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        /* FILOSOFÍA CULINARIA - SECCIÓN ADICIONAL PARA LÍNEAS */
+        .section-philosophy {
+            padding: 150px 10%;
+            background: #000;
+            text-align: center;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-top: 80px;
+        }
+
+        .phil-item {
+            padding: 50px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition-fast);
+        }
+
+        .phil-item:hover {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .phil-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .phil-item h4 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* FORMULARIO DE CONTRATACIÓN */
+        .section-hire {
+            padding: 150px 10%;
+            background: #070707;
+            position: relative;
+        }
+
+        .hire-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+        }
+
+        .hire-content h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 40px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            border-bottom-color: var(--primary);
+        }
+
+        /* FOOTER LIQUID GLASS */
+        footer {
+            padding: 80px 5%;
+            background: transparent;
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .footer-liquid {
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--liquid-glass-border);
+            border-radius: 40px;
+            padding: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.3);
+        }
+
+        .footer-left h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-nav-col h5 {
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            font-size: 0.7rem;
+        }
+
+        .footer-nav-col ul {
+            list-style: none;
+        }
+
+        .footer-nav-col li {
+            margin-bottom: 15px;
+        }
+
+        .footer-nav-col a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-nav-col a:hover {
+            color: #fff;
+            padding-left: 10px;
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* ANIMACIONES DE REVELACIÓN */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1100px) {
+            .section-bio, .menu-container, .hire-wrapper, .philosophy-grid { grid-template-columns: 1fr; }
+            header { padding: 15px 25px; }
+            nav { display: none; }
+            .footer-liquid { flex-direction: column; gap: 60px; padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ELEMENTOS DE UI DINÁMICOS -->
+    <div id="scroll-tracker"></div>
+    <div id="cursor-main"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- HEADER LIQUID GLASS -->
+    <header id="main-nav">
+        <a href="#" class="brand-logo">DAN<span>SHI</span></a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#chef">Daniel Marchetti</a></li>
+                <li><a href="#cuisine">La Cocina</a></li>
+                <li><a href="#hire">Contrataciones</a></li>
+            </ul>
+        </nav>
+        <div class="header-action">
+            <a href="#hire" class="cta-btn" style="padding: 12px 30px; font-size: 0.6rem;">Booking</a>
+        </div>
+    </header>
+
+    <main>
+        
+        <!-- SECCIÓN HERO -->
+        <section class="hero" id="home">
+            <div class="hero-bg-text">CRAFT</div>
+            <div class="hero-content">
+                <p class="hero-name reveal">Daniel Marchetti</p>
+                <h1 class="hero-title reveal">Arte en <br>Fusión</h1>
+                <p class="hero-description reveal">
+                    Explorando la intersección perfecta entre la disciplina del Sol Naciente y la pasión del Mediterráneo Inmigrante.
+                </p>
+                <div class="reveal">
+                    <a href="#cuisine" class="cta-btn">Descubrir el Menú</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN BIOGRAFÍA: DANIEL MARCHETTI -->
+        <section class="section-bio" id="chef">
+            <div class="bio-visual reveal">
+                <div class="bio-image-frame">
+                    <!--  -->
+                    <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Daniel Marchetti">
+                </div>
+                <div class="bio-label">Executive Chef</div>
+            </div>
+
+            <div class="bio-content reveal">
+                <h2 class="reveal">Siglos de <span>legado</span> inmigrante.</h2>
+                <div class="bio-text">
+                    <p>Mi nombre es <strong>Daniel Marchetti</strong>. Mi historia no es común; es un viaje de siglos condensado en un solo paladar. Soy el resultado de una estirpe de inmigrantes italianos que, generaciones atrás, cruzaron el océano para echar raíces en el corazón de El Salvador.</p>
+                    
+                    <p>Crecí con el aroma de la albahaca fresca y la calidez del sol salvadoreño, pero mi destino se selló cuando descubrí el acero japonés. Con 3 años de experiencia en la alta cocina, mi formación alcanzó su punto álgido en <strong>SOHO Japanese Fusion</strong>.</p>
+                    
+                    <p>En SOHO, no solo aprendí a preparar Ramens y Sushis; aprendí que la cocina es arquitectura. He dedicado mi carrera a fusionar la estructura de la pasta italiana con la elegancia minimalista de Japón. Mi cocina es DANSHI: Disciplina, Alma y Fusión.</p>
+                </div>
+                
+                <div style="margin-top: 50px; display: flex; gap: 40px;" class="reveal">
+                    <div>
+                        <p style="font-family: 'Syncopate'; font-size: 2rem; color: var(--primary);">03</p>
+                        <p style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;">Años de Maestría</p>
+                    </div>
+                    <div>
+                        <p style="font-family: 'Syncopate'; font-size: 2rem; color: var(--primary);">SHU</p>
+                        <p style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase;">Disciplina Soho</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN FILOSOFÍA (EXTRA PARA CONTENIDO) -->
+        <section class="section-philosophy reveal">
+            <p style="letter-spacing: 10px; color: var(--secondary); text-transform: uppercase; font-size: 0.7rem; margin-bottom: 20px;">Filosofía Danshi</p>
+            <h2 class="hero-title" style="font-size: 4rem;">Los Tres Pilares</h2>
+            
+            <div class="philosophy-grid">
+                <div class="phil-item reveal">
+                    <i class="fas fa-seedling"></i>
+                    <h4>Origen</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dim);">Respeto absoluto por el ingrediente local salvadoreño, tratado con técnica europea.</p>
+                </div>
+                <div class="phil-item reveal">
+                    <i class="fas fa-microchip"></i>
+                    <h4>Precisión</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dim);">La rigurosidad japonesa en cada corte. El cuchillo como extensión del espíritu.</p>
+                </div>
+                <div class="phil-item reveal">
+                    <i class="fas fa-fire"></i>
+                    <h4>Pasión</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dim);">La herencia italiana del sabor profundo. Aquello que no se aprende, se hereda.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN MENÚ EXPANDIDO -->
+        <section class="section-menu" id="cuisine">
+            <div class="menu-title-block reveal">
+                <h2 class="hero-title" style="font-size: 5vw;">The Menu</h2>
+            </div>
+
+            <div class="menu-tabs reveal">
+                <button class="tab-btn active" data-filter="all">Todas las Creaciones</button>
+                <button class="tab-btn" data-filter="it">Italian Soul</button>
+                <button class="tab-btn" data-filter="jp">Nippon Heart</button>
+                <button class="tab-btn" data-filter="fs">Signature Fusion</button>
+            </div>
+
+            <div class="menu-container">
+                <!-- Ítem 1 -->
+                <article class="menu-card reveal" data-cat="fs">
+                    <img src="https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=600&q=80" class="menu-card-img" alt="Pasta Miso">
+                    <div class="menu-card-content">
+                        <span class="menu-card-cat">Fusión Estelar</span>
+                        <h3>Udon Carbonara de Miso</h3>
+                        <p>Fideos udon hechos a mano con emulsión de carbonara clásica italiana e infusión de miso blanco.</p>
+                        <span class="menu-card-price">$26.00</span>
+                    </div>
+                </article>
+
+                <!-- Ítem 2 -->
+                <article class="menu-card reveal" data-cat="jp">
+                    <img src="https://images.unsplash.com/photo-1569058242253-92a9c71f9867?auto=format&fit=crop&w=600&q=80" class="menu-card-img" alt="Ramen SOHO">
+                    <div class="menu-card-content">
+                        <span class="menu-card-cat">Legado SOHO</span>
+                        <h3>Tonkotsu Shoyu Ramen</h3>
+                        <p>Caldo cremoso de cerdo de 16 horas, chashu marinado en soja y sake, y huevo nitamago perfecto.</p>
+                        <span class="menu-card-price">$19.00</span>
+                    </div>
+                </article>
+
+                <!-- Ítem 3 -->
+                <article class="menu-card reveal" data-cat="it">
+                    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80" class="menu-card-img" alt="Risotto">
+                    <div class="menu-card-content">
+                        <span class="menu-card-cat">Tradición Italiana</span>
+                        <h3>Risotto de Shiitake & Trufa</h3>
+                        <p>Arroz Carnaroli mantecado con dashi de hongos japoneses y terminado con aceite de trufa blanca.</p>
+                        <span class="menu-card-price">$28.00</span>
+                    </div>
+                </article>
+
+                <!-- Ítem 4 -->
+                <article class="menu-card reveal" data-cat="fs">
+                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80" class="menu-card-img" alt="Sushi Italo">
+                    <div class="menu-card-content">
+                        <span class="menu-card-cat">Nigiri de Autor</span>
+                        <h3>Bresaola Wagyu Nigiri</h3>
+                        <p>Fina bresaola de Wagyu sobre arroz de sushi, con una gota de reducción de balsámico añejo.</p>
+                        <span class="menu-card-price">$24.00</span>
+                    </div>
+                </article>
+
+                <!-- Ítem 5 -->
+                <article class="menu-card reveal" data-cat="it">
+                    <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80" class="menu-card-img" alt="Pasta Shiso">
+                    <div class="menu-card-content">
+                        <span class="menu-card-cat">Pasta Fresca</span>
+                        <h3>Linguine al Pesto de Shiso</h3>
+                        <p>Pasta artesanal con un pesto vibrante de hojas de shiso verde, piñones y Parmigiano Reggiano.</p>
+                        <span class="menu-card-price">$22.00</span>
+                    </div>
+                </article>
+
+                <!-- Ítem 6 -->
+                <article class="menu-card reveal" data-cat="jp">
+                    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80" class="menu-card-img" alt="Sashimi">
+                    <div class="menu-card-content">
+                        <span class="menu-card-cat">Crudos Pureza</span>
+                        <h3>Sashimi de Hamachi con Yuzu</h3>
+                        <p>Cortes precisos de Hamachi con vinagreta de yuzu y aceite de oliva virgen extra italiano.</p>
+                        <span class="menu-card-price">$32.00</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CONTRATACIONES -->
+        <section class="section-hire" id="hire">
+            <div class="hire-wrapper">
+                <div class="hire-content reveal">
+                    <p class="hero-name" style="font-size: 1rem;">Booking Daniel Marchetti</p>
+                    <h2>Contrata el <span>sabor</span>.</h2>
+                    <p style="color: var(--text-dim); margin-top: 30px;">
+                        Disponible para cenas privadas exclusivas, consultorías de menú para restaurantes de fusión y eventos corporativos de alto perfil.
+                    </p>
+                    
+                    <div style="margin-top: 50px;">
+                        <p style="font-family: 'Bodoni Moda'; font-size: 1.2rem;">marchetti.chef@danshi.com</p>
+                        <p style="font-family: 'Bodoni Moda'; font-size: 1.2rem;">San Salvador, El Salvador</p>
+                    </div>
+                </div>
+
+                <div class="hire-form-box reveal">
+                    <form id="hire-form" onsubmit="event.preventDefault(); alert('Solicitud enviada a Daniel Marchetti. Te responderé en menos de 24 horas.');">
+                        <div class="form-group">
+                            <label class="form-label">Tu Nombre</label>
+                            <input type="text" class="form-input" placeholder="Nombre completo o empresa">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Servicio Requerido</label>
+                            <select class="form-input" style="background: #000;">
+                                <option>Chef Privado (Cena en Casa)</option>
+                                <option>Consultoría de Menú</option>
+                                <option>Taller de Cocina Fusión</option>
+                                <option>Evento Corporativo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mensaje</label>
+                            <textarea class="form-input" rows="4" placeholder="Háblame de tu evento o proyecto..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-btn" style="width: 100%;">Enviar Propuesta de Contratación</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER LIQUID GLASS -->
+    <footer>
+        <div class="footer-liquid reveal">
+            <div class="footer-left">
+                <h2 class="brand-logo">DAN<span>SHI</span></h2>
+                <p style="max-width: 300px; color: var(--text-dim); font-size: 0.8rem; line-height: 1.8;">
+                    La culminación de la técnica japonesa y la herencia italiana bajo el cielo de El Salvador.
+                </p>
+                <div style="margin-top: 30px; display: flex; gap: 20px;">
+                    <a href="#" style="color: var(--primary); font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: var(--primary); font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: var(--primary); font-size: 1.5rem;"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-right" style="display: flex; gap: 100px;">
+                <div class="footer-nav-col">
+                    <h5>Navegación</h5>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#chef">Daniel Marchetti</a></li>
+                        <li><a href="#cuisine">Menú</a></li>
+                        <li><a href="#hire">Contratar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-nav-col">
+                    <h5>Concepto</h5>
+                    <ul>
+                        <li><a href="#">Historia Inmigrante</a></li>
+                        <li><a href="#">SOHO Residency</a></li>
+                        <li><a href="#">Técnica Japonesa</a></li>
+                        <li><a href="#">Pastas de Autor</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 DANSHI - DANIEL MARCHETTI EXECUTIVE CHEF</p>
+            <p>EL SALVADOR • ITALIA • JAPÓN</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE INTERACCIÓN -->
+    <script>
+        // CURSOR PERSONALIZADO DOBLE
+        const mainCursor = document.getElementById('cursor-main');
+        const dotCursor = document.getElementById('cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            mainCursor.style.transform = `translate(${e.clientX - 17}px, ${e.clientY - 17}px)`;
+            dotCursor.style.left = e.clientX + 'px';
+            dotCursor.style.top = e.clientY + 'px';
+        });
+
+        // EFECTOS DE CURSOR EN ENLACES
+        document.querySelectorAll('a, button, .menu-card, input, select, textarea').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                mainCursor.style.transform += ' scale(2)';
+                mainCursor.style.backgroundColor = 'rgba(229, 213, 184, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                mainCursor.style.transform = mainCursor.style.transform.replace(' scale(2)', '');
+                mainCursor.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // SEGUIMIENTO DE SCROLL Y HEADER SCROLL
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-nav');
+            const tracker = document.getElementById('scroll-tracker');
+            
+            // Header animation
+            if (window.scrollY > 100) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+
+            // Progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            tracker.style.width = scrolled + "%";
+        });
+
+        // FILTRADO DE MENÚ DINÁMICO
+        const tabs = document.querySelectorAll('.tab-btn');
+        const cards = document.querySelectorAll('.menu-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.getAttribute('data-filter');
+                cards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-cat') === filter) {
+                        card.style.display = 'flex';
+                        setTimeout(() => card.style.opacity = '1', 50);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 500);
+                    }
+                });
+            });
+        });
+
+        // OBSERVADOR DE REVELACIÓN (SCROLL ANIMATIONS)
+        const revealOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // PARALLAX SUAVE EN TEXTO DE FONDO
+        window.addEventListener('scroll', () => {
+            const bgText = document.querySelector('.hero-bg-text');
+            const offset = window.scrollY;
+            bgText.style.transform = `translateX(${offset * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>
